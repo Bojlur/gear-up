@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
+import Stripe from "stripe";
 import { Prisma } from "../../generated/prisma/client";
 import config from "../config";
 import { AppError } from "../errors/AppError";
@@ -32,6 +33,12 @@ export const globalErrorHandler = (err: any, req: Request, res: Response, next: 
   } else if (err.name === "JsonWebTokenError" || err.name === "TokenExpiredError") {
     statusCode = httpStatus.UNAUTHORIZED;
     message = "Invalid or expired token";
+  } else if (err instanceof Stripe.errors.StripeSignatureVerificationError) {
+    statusCode = httpStatus.BAD_REQUEST;
+    message = "Invalid Stripe webhook signature";
+  } else if (err instanceof Stripe.errors.StripeError) {
+    statusCode = httpStatus.BAD_REQUEST;
+    message = err.message;
   } else if (err instanceof Error) {
     message = err.message;
   }
