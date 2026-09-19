@@ -9,6 +9,8 @@ import { categoryAdminRoutes } from "./modules/category/category.admin.route";
 import { categoryRoutes } from "./modules/category/category.route";
 import { gearProviderRoutes } from "./modules/gear/gear.provider.route";
 import { gearRoutes } from "./modules/gear/gear.route";
+import { rentalProviderRoutes } from "./modules/rental/rental.provider.route";
+import { rentalRoutes } from "./modules/rental/rental.route";
 import { userRoutes } from "./modules/user/user.route";
 
 const app: Application = express();
@@ -40,6 +42,8 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/admin/categories", categoryAdminRoutes);
 app.use("/api/gear", gearRoutes);
 app.use("/api/provider/gear", gearProviderRoutes);
+app.use("/api/rentals", rentalRoutes);
+app.use("/api/provider/orders", rentalProviderRoutes);
 
 app.use(notFound);
 app.use(globalErrorHandler);
