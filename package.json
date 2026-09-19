@@ -11,6 +11,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate",
+    "build:api": "prisma generate && esbuild src/app.ts --bundle --platform=node --format=esm --target=node22 --outfile=api/index.js --packages=external",
     "stripe:webhook": "stripe listen --forward-to localhost:5000/api/payments/webhook",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,6 +24,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.6.2",
     "@types/pg": "^8.23.1",
+    "esbuild": "^0.28.2",
     "prisma": "^7.10.0",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
